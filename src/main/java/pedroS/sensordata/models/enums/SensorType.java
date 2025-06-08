@@ -1,7 +1,7 @@
 package pedroS.sensordata.models.enums; 
 
 public enum SensorType{
-	PRESENCA, 
-	UMIDADE,
-	LUMINOSIDADE
+	LDR, 
+	DHT_UMIDADE,
+	DHT_TEMPERATURA
 }
