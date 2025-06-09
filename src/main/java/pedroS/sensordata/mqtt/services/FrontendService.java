@@ -17,15 +17,16 @@ public class FrontendService {
 
     @Transactional
     public FrontDTO getSensorSummary() {
-        LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(2);
+        LocalDateTime fifteenMinutesAgo = LocalDateTime.now().minusMinutes(15);
         
-        Double avgTemp = dataRepo.findLatestValueBySensor(SensorType.DHT_TEMPERATURA);
+        System.out.println(fifteenMinutesAgo);
         
-        Double avgHumidity = dataRepo.findLatestValueBySensor(SensorType.DHT_UMIDADE); 
+        Double avgTemp = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_TEMPERATURA, fifteenMinutesAgo, LocalDateTime.now());
+        
+        Double avgHumidity = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_UMIDADE, fifteenMinutesAgo, LocalDateTime.now()); 
         
         Double currentLight = dataRepo.findLatestValueBySensor(SensorType.LDR);
         
- 
         return new FrontDTO(
             avgTemp,
             avgHumidity,
