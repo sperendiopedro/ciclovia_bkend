@@ -1,6 +1,7 @@
 package pedroS.sensordata.mqtt.services;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,13 @@ public class FrontendService {
 
     @Transactional
     public FrontDTO getSensorSummary() {
-        LocalDateTime fifteenMinutesAgo = LocalDateTime.now().minusMinutes(15);
+        LocalDateTime fifteenMinutesAgo = LocalDateTime.now(ZoneOffset.UTC).minusMinutes(15);
+        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
         
-        System.out.println(fifteenMinutesAgo);
         
-        Double avgTemp = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_TEMPERATURA, fifteenMinutesAgo, LocalDateTime.now());
+        Double avgTemp = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_TEMPERATURA, fifteenMinutesAgo, now);
         
-        Double avgHumidity = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_UMIDADE, fifteenMinutesAgo, LocalDateTime.now()); 
+        Double avgHumidity = dataRepo.calculateAverageBySensorAndPeriod(SensorType.DHT_UMIDADE, fifteenMinutesAgo, now); 
         
         Double currentLight = dataRepo.findLatestValueBySensor(SensorType.LDR);
         
@@ -31,7 +32,7 @@ public class FrontendService {
             avgTemp,
             avgHumidity,
             currentLight,
-            LocalDateTime.now()
+            LocalDateTime.now(ZoneOffset.UTC)
         );
     }
 	

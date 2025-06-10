@@ -23,7 +23,6 @@ import pedroS.sensordata.repositories.EntityRepository;
 @RequestMapping("sensors/api")
 public class SensorController {
 
-
     private final FrontendService sensorService;
 
     public SensorController(FrontendService sensorService) {
